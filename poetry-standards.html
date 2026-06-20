@@ -1,0 +1,1219 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>古典诗词影视宇宙统一规范 V2.0</title>
+  <style>
+    :root {
+      --ink:       #1a1208;
+      --ink-soft:  #2e2010;
+      --gold:      #c8a84b;
+      --gold-dim:  #8a6e2a;
+      --gold-pale: rgba(200,168,75,.15);
+      --red:       #8b1a1a;
+      --rice:      #f5edd8;
+      --rice-dim:  #ede0c0;
+      --panel:     #241a08;
+      --panel-alt: #1e1506;
+      --border:    rgba(200,168,75,.22);
+      --muted:     #a08c5a;
+      --code-bg:   #120e04;
+      --radius:    14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--rice);
+      background: var(--ink);
+      font-family: "PingFang SC","Microsoft YaHei","Noto Serif SC",Georgia,serif;
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; padding: 12px 5vw;
+      background: rgba(26,18,8,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--gold); font-size: 15px; white-space: nowrap; }
+    .brand-mark {
+      display: grid; place-items: center;
+      width: 32px; height: 32px;
+      background: var(--gold); color: var(--ink);
+      border-radius: 50%; font-size: 14px; font-weight: 900;
+    }
+    .nav { display: flex; gap: 4px; overflow-x: auto; font-size: 13px; }
+    .nav a {
+      padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s, background .2s;
+    }
+    .nav a:hover { color: var(--gold); background: var(--gold-pale); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 960px; margin: 0 auto;
+      padding: 72px 28px 56px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      color: var(--gold); border: 1px solid var(--border);
+      border-radius: 999px; font-size: 13px; font-weight: 700;
+      background: var(--gold-pale); margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(32px,6vw,64px);
+      line-height: 1.1;
+      color: var(--gold);
+      letter-spacing: .04em;
+    }
+    .hero-sub { font-size: 16px; color: var(--muted); max-width: 640px; margin: 0 auto 36px; }
+
+    .problem-list {
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+      gap: 10px; max-width: 860px; margin: 0 auto 48px;
+      text-align: left;
+    }
+    .problem-item {
+      padding: 12px 14px;
+      background: rgba(139,26,26,.18);
+      border: 1px solid rgba(139,26,26,.35);
+      border-radius: 10px; font-size: 13px;
+      color: #e8c0a0;
+    }
+    .problem-item::before { content: "✗  "; color: #c0503a; font-weight: 800; }
+
+    /* ── Workflow ── */
+    .workflow {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 0; max-width: 880px; margin: 0 auto 20px;
+    }
+    .workflow-step {
+      padding: 10px 16px; background: var(--panel);
+      border: 1px solid var(--border); border-radius: 10px;
+      font-size: 13px; font-weight: 700; color: var(--gold);
+      white-space: nowrap;
+    }
+    .workflow-arrow { padding: 0 6px; color: var(--gold-dim); font-size: 18px; }
+
+    /* ── Main layout ── */
+    main { max-width: 960px; margin: 0 auto; padding: 0 28px 80px; }
+
+    /* ── Level sections ── */
+    .level-section {
+      margin-top: 56px;
+      scroll-margin-top: 72px;
+    }
+    .level-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px;
+    }
+    .level-badge {
+      display: grid; place-items: center;
+      min-width: 44px; height: 44px;
+      background: var(--gold); color: var(--ink);
+      border-radius: 12px; font-size: 11px; font-weight: 900;
+      line-height: 1.2; text-align: center; padding: 4px;
+    }
+    .level-title { margin: 0; font-size: 22px; color: var(--gold); }
+    .level-desc { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+
+    /* ── Spec cards ── */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+      gap: 12px;
+    }
+    .spec-card {
+      padding: 18px 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .spec-card h4 {
+      margin: 0 0 10px; font-size: 13px; font-weight: 800;
+      color: var(--gold); letter-spacing: .06em; text-transform: uppercase;
+    }
+    .spec-card p { margin: 0; color: #c8b890; font-size: 13px; line-height: 1.6; }
+    .spec-card ul { margin: 6px 0 0; padding-left: 16px; color: #c8b890; font-size: 13px; }
+    .spec-card li { margin: 3px 0; }
+
+    .spec-card.danger {
+      background: rgba(139,26,26,.15);
+      border-color: rgba(139,26,26,.4);
+    }
+    .spec-card.danger h4 { color: #e87060; }
+    .spec-card.danger li { color: #e8a090; }
+
+    /* ── Shot templates ── */
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+      gap: 10px;
+    }
+    .shot-card {
+      padding: 16px;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px; text-align: center;
+    }
+    .shot-icon {
+      font-size: 28px; margin-bottom: 8px;
+      display: block;
+    }
+    .shot-name { font-size: 15px; font-weight: 800; color: var(--gold); margin-bottom: 4px; }
+    .shot-use { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .shot-keys { font-size: 11px; color: #c8b890; font-style: italic; }
+
+    /* ── Lighting & color strips ── */
+    .light-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+      gap: 10px;
+    }
+    .light-card {
+      padding: 14px 16px;
+      border-radius: 12px; border: 1px solid var(--border);
+      text-align: center;
+    }
+    .light-card .label { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .light-card .tone { font-size: 12px; }
+
+    .light-morning  { background: linear-gradient(145deg,#0d1a2e,#1a2f4a); color: #9bb8d4; }
+    .light-noon     { background: linear-gradient(145deg,#2a2200,#4a3c00); color: #e8d090; }
+    .light-dusk     { background: linear-gradient(145deg,#2e1200,#5a2800); color: #e8a060; }
+    .light-night    { background: linear-gradient(145deg,#050814,#0d1428); color: #7090c8; }
+    .light-moon     { background: linear-gradient(145deg,#0a0e18,#1a2030); color: #b0c8d8; }
+
+    .color-strip {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .swatch {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .swatch-block {
+      width: 60px; height: 60px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .swatch-label { font-size: 11px; color: var(--muted); text-align: center; }
+    .swatch-pct { font-size: 12px; font-weight: 700; color: var(--gold); }
+
+    /* ── Code / prompt blocks ── */
+    .prompt-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      font-family: "SF Mono","Fira Code","Cascadia Code",Consolas,monospace;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #d4c49a;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .prompt-block .label { color: var(--gold); font-weight: 700; }
+    .prompt-block .value { color: #e8d8a0; }
+    .prompt-block .comment { color: #5a4e2a; }
+    .prompt-block .keyword { color: #88c0d0; }
+    .prompt-block .style-tag { color: #a3be8c; }
+    .prompt-block .neg { color: #bf616a; }
+
+    /* ── Continuity table ── */
+    .continuity-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .continuity-table th {
+      padding: 10px 14px;
+      background: var(--panel-alt);
+      color: var(--gold); font-weight: 700;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .continuity-table td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      color: #c8b890;
+    }
+    .continuity-table tr:nth-child(even) td { background: rgba(200,168,75,.04); }
+
+    /* ── Generator ── */
+    #generator {
+      margin-top: 60px;
+      padding: 32px;
+      background: var(--panel);
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+    }
+    #generator h2 { margin: 0 0 6px; color: var(--gold); font-size: 22px; }
+    #generator .gen-desc { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+
+    .gen-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 12px; margin-bottom: 12px;
+    }
+    .gen-group { display: flex; flex-direction: column; gap: 5px; }
+    .gen-group label { font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: .06em; }
+    .gen-group input, .gen-group select, .gen-group textarea {
+      padding: 9px 12px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px; color: var(--rice);
+      font-size: 13px; font-family: inherit;
+      outline: none; resize: vertical;
+      transition: border-color .2s;
+    }
+    .gen-group input:focus, .gen-group select:focus, .gen-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .gen-group select option { background: #241a08; }
+
+    .gen-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .gen-btn {
+      padding: 10px 20px; border: none; cursor: pointer;
+      border-radius: 999px; font-weight: 800; font-size: 14px;
+      transition: opacity .2s;
+    }
+    .gen-btn:hover { opacity: .85; }
+    .gen-btn.primary { background: var(--gold); color: var(--ink); }
+    .gen-btn.secondary {
+      background: transparent; color: var(--gold);
+      border: 1px solid var(--border);
+    }
+
+    .gen-output { margin-top: 22px; display: none; }
+    .gen-output.visible { display: block; }
+
+    .output-section { margin-bottom: 18px; }
+    .output-section h4 {
+      margin: 0 0 8px; color: var(--gold);
+      font-size: 13px; letter-spacing: .06em;
+    }
+    .copy-btn {
+      float: right; margin-top: -2px;
+      padding: 3px 10px;
+      background: var(--gold-pale); border: 1px solid var(--border);
+      border-radius: 999px; font-size: 11px; color: var(--gold);
+      cursor: pointer; font-family: inherit;
+    }
+    .copy-btn:hover { background: rgba(200,168,75,.3); }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg,transparent,var(--border),transparent);
+      margin: 48px 0 0;
+    }
+
+    /* ── Tab system for environment library ── */
+    .env-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .env-tab {
+      padding: 7px 14px;
+      background: var(--panel-alt); border: 1px solid var(--border);
+      border-radius: 999px; font-size: 13px; cursor: pointer; color: var(--muted);
+      transition: all .2s;
+    }
+    .env-tab.active, .env-tab:hover { background: var(--gold-pale); color: var(--gold); border-color: var(--gold-dim); }
+
+    .env-panel { display: none; }
+    .env-panel.active { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 12px; }
+
+    /* ── Footer ── */
+    footer {
+      max-width: 960px; margin: 0 auto;
+      padding: 24px 28px 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 680px) {
+      .hero { padding: 48px 18px 40px; }
+      main { padding-left: 18px; padding-right: 18px; }
+      .topbar { flex-direction: column; align-items: start; gap: 10px; }
+      #generator { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">诗</span>
+    古典诗词影视宇宙统一规范 V2.0
+  </div>
+  <nav class="nav">
+    <a href="#l1">世界观</a>
+    <a href="#l2">角色库</a>
+    <a href="#l3">环境库</a>
+    <a href="#l4">镜头库</a>
+    <a href="#l5">光影</a>
+    <a href="#l6">色彩</a>
+    <a href="#l7">运镜</a>
+    <a href="#l8">提示词</a>
+    <a href="#l9">连续性</a>
+    <a href="#l10">继承</a>
+    <a href="#generator">生成器</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-badge">古典诗词影视宇宙 · 十级规范体系</div>
+  <h1>让每首诗<br>成为同一部电影</h1>
+  <p class="hero-sub">统一世界观、角色库、环境库、镜头语言、光影、色彩、运镜，解决 AI 诗词视频"跳风格""人物变脸""场景乱穿"三大核心问题。</p>
+
+  <div class="problem-list">
+    <div class="problem-item">第一张唐朝风格</div>
+    <div class="problem-item">第二张宋朝风格</div>
+    <div class="problem-item">第三张古风游戏</div>
+    <div class="problem-item">第四张国漫画风</div>
+    <div class="problem-item">第五张写实摄影</div>
+    <div class="problem-item">人物长相不断变化</div>
+    <div class="problem-item">山水风格反复跳变</div>
+    <div class="problem-item">最后看起来像 PPT</div>
+  </div>
+
+  <div style="margin-bottom:32px;color:var(--muted);font-size:13px;">正确的工作流程：</div>
+  <div class="workflow">
+    <div class="workflow-step">诗词名称</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">作者数据库</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">环境数据库</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">角色卡</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">镜头模板</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">逐句解析</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">统一提示词</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">图片生成</div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">视频生成</div>
+  </div>
+</section>
+
+<main>
+
+  <!-- ══════════════════════════════════════════ LEVEL 1 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l1">
+    <div class="level-header">
+      <div class="level-badge">一级<br>规范</div>
+      <h2 class="level-title">世界观锚定</h2>
+    </div>
+    <p class="level-desc">每次生成前必须首先输出世界观设定。所有镜头必须在同一个视觉宇宙中存在。</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>艺术风格</h4>
+        <p>中国传统水墨动画电影<br>参考：敦煌壁画色彩 · 宋代山水构图 · 元代水墨意境 · 中国动画学派</p>
+      </div>
+      <div class="spec-card">
+        <h4>技术规格</h4>
+        <ul>
+          <li>画面比例：16:9</li>
+          <li>分辨率：8K</li>
+          <li>帧率：24fps</li>
+          <li>质感：宣纸纹理</li>
+          <li>渲染：动态水墨</li>
+          <li>镜头语言：电影级</li>
+        </ul>
+      </div>
+      <div class="spec-card danger">
+        <h4>绝对禁止</h4>
+        <ul>
+          <li>现代建筑 / 交通工具</li>
+          <li>现代服装 / 现代字体</li>
+          <li>西方奇幻元素</li>
+          <li>游戏风 UI</li>
+          <li>动漫眼睛 / 厚涂赛璐珞</li>
+          <li>水彩欧美插画风</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="prompt-block"><span class="label">【世界观设定输出模板】</span>
+
+<span class="label">艺术风格：</span><span class="value">中国传统水墨动画电影</span>
+<span class="label">参考体系：</span><span class="value">敦煌壁画色彩 / 宋代山水构图 / 元代水墨意境 / 中国动画学派</span>
+<span class="label">画面比例：</span><span class="value">16:9</span>  <span class="label">分辨率：</span><span class="value">8K</span>  <span class="label">帧率：</span><span class="value">24fps</span>
+<span class="label">质感：</span><span class="value">宣纸纹理</span>  <span class="label">渲染：</span><span class="value">动态水墨扩散</span>
+<span class="label">镜头语言：</span><span class="value">电影级镜头</span>
+<span class="label">禁止元素：</span><span class="neg">modern architecture, modern clothes, western fantasy,
+           anime style, game UI, text, logo, watermark</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 2 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l2">
+    <div class="level-header">
+      <div class="level-badge">二级<br>规范</div>
+      <h2 class="level-title">作者统一角色库</h2>
+    </div>
+    <p class="level-desc">每首诗必须先生成作者角色卡，分配唯一 ID。后续所有镜头调用同一 ID，禁止重新生成人物。</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>角色卡必填字段</h4>
+        <ul>
+          <li>姓名 / 字号</li>
+          <li>年龄（诗作时期）</li>
+          <li>朝代 / 身份</li>
+          <li>体型 / 脸型</li>
+          <li>发型 / 胡须</li>
+          <li>服饰（具体颜色材质）</li>
+          <li>气质 / 表情特征</li>
+          <li>动作特征</li>
+          <li>角色 ID（如 李白-TD-001）</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>角色 ID 命名规则</h4>
+        <p>格式：<strong style="color:var(--gold)">姓名-朝代缩写-序号</strong></p>
+        <ul>
+          <li>李白-TD-001（唐代）</li>
+          <li>杜甫-TD-002（唐代）</li>
+          <li>苏轼-SD-001（宋代）</li>
+          <li>李清照-SD-002（宋代）</li>
+          <li>王维-TD-003（唐代）</li>
+          <li>白居易-TD-004（唐代）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="prompt-block"><span class="label">【角色卡示例：李白】</span>
+
+<span class="label">角色ID：</span>     <span class="value">李白-TD-001</span>
+<span class="label">姓名：</span>       <span class="value">李白，字太白，号青莲居士</span>
+<span class="label">年龄：</span>       <span class="value">约 25 岁（蜀道难创作时期）</span>
+<span class="label">朝代身份：</span>   <span class="value">唐代，游历诗人</span>
+<span class="label">体型：</span>       <span class="value">修长挺拔，肩宽腰窄</span>
+<span class="label">脸型：</span>       <span class="value">棱角分明，剑眉星目，鼻梁高挺</span>
+<span class="label">发型：</span>       <span class="value">高束发髻，以白玉簪固定，鬓角略散</span>
+<span class="label">胡须：</span>       <span class="value">短须，清晰修整</span>
+<span class="label">服饰：</span>       <span class="value">青色广袖道袍，腰系白色丝绦，足蹬黑色布靴</span>
+<span class="label">气质：</span>       <span class="value">飘逸不羁，眼神深邃，气宇轩昂</span>
+<span class="label">表情特征：</span>   <span class="value">微扬嘴角，眼含豪情，偶露惊叹</span>
+<span class="label">动作特征：</span>   <span class="value">惯用右手指山，拂袖回望，停步仰观</span>
+
+<span class="comment"># 此 ID 在本片所有镜头中保持一致，禁止重新生成人物外形</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 3 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l3">
+    <div class="level-header">
+      <div class="level-badge">三级<br>规范</div>
+      <h2 class="level-title">环境统一库</h2>
+    </div>
+    <p class="level-desc">建立诗词环境数据库，每个场景分配 ID。整首诗使用同一套地貌，避免镜头间地理跳变。</p>
+
+    <div class="env-tabs" id="envTabs">
+      <div class="env-tab active" onclick="switchEnv('shu')">蜀道环境库</div>
+      <div class="env-tab" onclick="switchEnv('shan')">山岳环境库</div>
+      <div class="env-tab" onclick="switchEnv('jiang')">江河环境库</div>
+      <div class="env-tab" onclick="switchEnv('bianSai')">边塞环境库</div>
+      <div class="env-tab" onclick="switchEnv('gongting')">宫廷环境库</div>
+      <div class="env-tab" onclick="switchEnv('changan')">长安环境库</div>
+    </div>
+
+    <div id="env-shu" class="env-panel active">
+      <div class="spec-card"><h4>地貌</h4><p>四川盆地边缘群山，悬崖峭壁，峰顶云海</p></div>
+      <div class="spec-card"><h4>植被</h4><p>古松 · 杉木 · 箭竹 · 苔藓覆石</p></div>
+      <div class="spec-card"><h4>色调</h4><p>主色：青灰 · 墨黑 · 赭石<br>辅色：苔绿 · 云白</p></div>
+      <div class="spec-card"><h4>气候</h4><p>高湿度 · 多云雾 · 天空云海翻滚</p></div>
+      <div class="spec-card"><h4>道路</h4><p>栈道 · 石阶 · 悬崖石路 · 铁索桥</p></div>
+      <div class="spec-card"><h4>环境ID</h4><p style="color:var(--gold);font-weight:700;">蜀道-ENV-001</p></div>
+    </div>
+
+    <div id="env-shan" class="env-panel">
+      <div class="spec-card"><h4>地貌</h4><p>连绵山峰，峰顶积雪，山腰云带环绕</p></div>
+      <div class="spec-card"><h4>植被</h4><p>苍松 · 劲柏 · 枯藤 · 瀑布飞溅</p></div>
+      <div class="spec-card"><h4>色调</h4><p>主色：墨蓝 · 石灰 · 冷白<br>辅色：翠绿 · 赭黄</p></div>
+      <div class="spec-card"><h4>气候</h4><p>高寒 · 风大 · 偶有暴雪 · 云雾缭绕</p></div>
+      <div class="spec-card"><h4>道路</h4><p>山脊小径 · 乱石坡 · 悬崖栈道</p></div>
+      <div class="spec-card"><h4>环境ID</h4><p style="color:var(--gold);font-weight:700;">山岳-ENV-002</p></div>
+    </div>
+
+    <div id="env-jiang" class="env-panel">
+      <div class="spec-card"><h4>地貌</h4><p>宽阔江面，两岸峭壁，江心沙洲，渔舟点点</p></div>
+      <div class="spec-card"><h4>植被</h4><p>芦苇 · 垂柳 · 江边老树 · 水草</p></div>
+      <div class="spec-card"><h4>色调</h4><p>主色：青灰 · 蓝墨 · 浑黄<br>辅色：烟白 · 翠绿</p></div>
+      <div class="spec-card"><h4>气候</h4><p>湿润 · 多雾 · 江风轻拂 · 烟雨蒙蒙</p></div>
+      <div class="spec-card"><h4>水面</h4><p>碧波荡漾 · 漩涡暗流 · 月光倒影</p></div>
+      <div class="spec-card"><h4>环境ID</h4><p style="color:var(--gold);font-weight:700;">江河-ENV-003</p></div>
+    </div>
+
+    <div id="env-bianSai" class="env-panel">
+      <div class="spec-card"><h4>地貌</h4><p>戈壁荒漠，黄沙万里，烽火台遗址，长城残垣</p></div>
+      <div class="spec-card"><h4>植被</h4><p>骆驼刺 · 枯草 · 偶有胡杨</p></div>
+      <div class="spec-card"><h4>色调</h4><p>主色：沙黄 · 褐赤 · 铁锈红<br>辅色：天蓝 · 血橙</p></div>
+      <div class="spec-card"><h4>气候</h4><p>极旱 · 风沙 · 昼热夜寒 · 黄沙漫天</p></div>
+      <div class="spec-card"><h4>地标</h4><p>烽火台 · 营帐 · 弯刀 · 战马 · 飞雁</p></div>
+      <div class="spec-card"><h4>环境ID</h4><p style="color:var(--gold);font-weight:700;">边塞-ENV-004</p></div>
+    </div>
+
+    <div id="env-gongting" class="env-panel">
+      <div class="spec-card"><h4>地貌</h4><p>宫墙高耸，殿宇连绵，御花园，朱柱金瓦</p></div>
+      <div class="spec-card"><h4>植被</h4><p>御园古柏 · 牡丹 · 荷池 · 梅林</p></div>
+      <div class="spec-card"><h4>色调</h4><p>主色：朱红 · 赭金 · 碧玉<br>辅色：冷白 · 墨黑</p></div>
+      <div class="spec-card"><h4>气候</h4><p>四时可切换 · 常有宫灯暖光</p></div>
+      <div class="spec-card"><h4>建筑</h4><p>重檐庑殿 · 石桥 · 回廊 · 琉璃瓦</p></div>
+      <div class="spec-card"><h4>环境ID</h4><p style="color:var(--gold);font-weight:700;">宫廷-ENV-005</p></div>
+    </div>
+
+    <div id="env-changan" class="env-panel">
+      <div class="spec-card"><h4>地貌</h4><p>长安城坊，朱雀大街，市集林立，城墙巍峨</p></div>
+      <div class="spec-card"><h4>植被</h4><p>街边槐树 · 长安桃花 · 曲江荷花</p></div>
+      <div class="spec-card"><h4>色调</h4><p>主色：砖红 · 赭土 · 金黄<br>辅色：群青 · 烟灰</p></div>
+      <div class="spec-card"><h4>气候</h4><p>四季分明 · 春有桃花 · 秋有黄叶</p></div>
+      <div class="spec-card"><h4>地标</h4><p>大雁塔 · 西市 · 太液池 · 明德门</p></div>
+      <div class="spec-card"><h4>环境ID</h4><p style="color:var(--gold);font-weight:700;">长安-ENV-006</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 4 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l4">
+    <div class="level-header">
+      <div class="level-badge">四级<br>规范</div>
+      <h2 class="level-title">镜头模板库</h2>
+    </div>
+    <p class="level-desc">固定五类镜头体系，每句诗从模板库中选取，不要自由发挥镜头类型。</p>
+
+    <div class="shot-grid">
+      <div class="shot-card">
+        <span class="shot-icon">🌌</span>
+        <div class="shot-name">超远景</div>
+        <div class="shot-use">交代天地关系</div>
+        <div class="shot-keys">epic landscape · vast mountains · tiny human figure · aerial view</div>
+      </div>
+      <div class="shot-card">
+        <span class="shot-icon">🏔</span>
+        <div class="shot-name">远景</div>
+        <div class="shot-use">展示环境全貌</div>
+        <div class="shot-keys">cinematic landscape · mountain road · wide establishing shot</div>
+      </div>
+      <div class="shot-card">
+        <span class="shot-icon">🧍</span>
+        <div class="shot-name">中景</div>
+        <div class="shot-use">人物行动叙事</div>
+        <div class="shot-keys">traveler walking · ancient scholar · medium shot · full body</div>
+      </div>
+      <div class="shot-card">
+        <span class="shot-icon">😶</span>
+        <div class="shot-name">近景</div>
+        <div class="shot-use">人物情绪表达</div>
+        <div class="shot-keys">facial expression · emotion · close portrait · upper body</div>
+      </div>
+      <div class="shot-card">
+        <span class="shot-icon">🖋</span>
+        <div class="shot-name">特写</div>
+        <div class="shot-use">意象强化点睛</div>
+        <div class="shot-keys">ink splash · raindrop · bird feather · macro detail · extreme close-up</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 5 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l5">
+    <div class="level-header">
+      <div class="level-badge">五级<br>规范</div>
+      <h2 class="level-title">光影规范</h2>
+    </div>
+    <p class="level-desc">整首诗统一时间段与光影设定，禁止一句一个时间。全片在开篇锁定主光影基调。</p>
+
+    <div class="light-grid">
+      <div class="light-card light-morning">
+        <div class="label">晨景</div>
+        <div class="tone">冷青色 · 薄雾 · 低色温<br>关键词：dawn mist, cold blue light, morning haze</div>
+      </div>
+      <div class="light-card light-noon">
+        <div class="label">午景</div>
+        <div class="tone">高亮度 · 强对比 · 暖黄<br>关键词：harsh sunlight, high contrast, warm noon</div>
+      </div>
+      <div class="light-card light-dusk">
+        <div class="label">黄昏</div>
+        <div class="tone">金色墨染 · 长影 · 橘红<br>关键词：golden hour, ink-dyed sunset, long shadows</div>
+      </div>
+      <div class="light-card light-night">
+        <div class="label">夜景</div>
+        <div class="tone">深蓝墨色 · 星光 · 暗调<br>关键词：deep blue night, ink darkness, starlight</div>
+      </div>
+      <div class="light-card light-moon">
+        <div class="label">月夜</div>
+        <div class="tone">银灰水墨 · 月光漫射<br>关键词：silver moonlight, ink wash night, soft glow</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="prompt-block"><span class="label">【蜀道难光影设定示例】</span>
+
+<span class="label">全片光影基调：</span><span class="value">阴天 · 云海 · 高反差 · 低饱和</span>
+<span class="label">光源：</span>        <span class="value">漫射冷光，无直射阳光</span>
+<span class="label">天空：</span>        <span class="value">云海翻滚，偶见云隙光</span>
+<span class="label">禁止：</span>        <span class="neg">大太阳 · 晴天蓝天 · 强暖光</span>
+
+<span class="comment"># 整首诗固定此基调，不因诗句内容临时改变天气</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 6 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l6">
+    <div class="level-header">
+      <div class="level-badge">六级<br>规范</div>
+      <h2 class="level-title">色彩规范</h2>
+    </div>
+    <p class="level-desc">每首诗开篇输出统一色板，后续每个镜头提示词均引用此色板，确保整片颜色统一。</p>
+
+    <div class="color-strip" style="margin-bottom:20px;padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:14px;">
+      <div class="swatch">
+        <div class="swatch-block" style="background:#1a1a1a;"></div>
+        <div class="swatch-label">主色<br>墨黑</div>
+        <div class="swatch-pct">70%</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#5a7060;"></div>
+        <div class="swatch-label">辅色<br>青灰</div>
+        <div class="swatch-pct">20%</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#c03030;"></div>
+        <div class="swatch-label">点缀<br>朱砂</div>
+        <div class="swatch-pct">5%</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#d4a830;"></div>
+        <div class="swatch-label">高光<br>淡金</div>
+        <div class="swatch-pct">5%</div>
+      </div>
+      <div style="padding-left:20px;font-size:12px;color:var(--muted);">
+        ← 蜀道难标准色板<br>（边塞诗用沙黄·赭红；江南诗用碧绿·烟白）
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>蜀道类诗</h4>
+        <ul><li>主色：墨黑 70%</li><li>辅色：青灰 20%</li><li>点缀：朱砂 5%</li><li>高光：淡金 5%</li></ul>
+      </div>
+      <div class="spec-card">
+        <h4>边塞类诗</h4>
+        <ul><li>主色：沙黄 50%</li><li>辅色：褐赤 30%</li><li>点缀：天蓝 10%</li><li>高光：血橙 10%</li></ul>
+      </div>
+      <div class="spec-card">
+        <h4>江南类诗</h4>
+        <ul><li>主色：烟白 40%</li><li>辅色：碧绿 35%</li><li>点缀：桃粉 15%</li><li>高光：淡黄 10%</li></ul>
+      </div>
+      <div class="spec-card">
+        <h4>宫廷类诗</h4>
+        <ul><li>主色：朱红 40%</li><li>辅色：赭金 35%</li><li>点缀：碧玉 15%</li><li>高光：冷白 10%</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 7 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l7">
+    <div class="level-header">
+      <div class="level-badge">七级<br>规范</div>
+      <h2 class="level-title">运镜规范</h2>
+    </div>
+    <p class="level-desc">每个镜头必须包含：镜头类型、运动方式、运动速度、时长。视频模型依赖这四个参数保持稳定。</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>推进类</h4>
+        <ul>
+          <li>无人机缓慢推进（6-10秒）</li>
+          <li>地面跟随推进（4-6秒）</li>
+          <li>侧向横移推进（4-8秒）</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>拉远类</h4>
+        <ul>
+          <li>垂直上升拉远（8-12秒）</li>
+          <li>反向拉镜（4-6秒）</li>
+          <li>广角退出（3-5秒）</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>环绕类</h4>
+        <ul>
+          <li>人物环绕（8-12秒）</li>
+          <li>山峰环绕（10-16秒）</li>
+          <li>建筑盘旋（6-10秒）</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>固定类</h4>
+        <ul>
+          <li>固定景深推移（4-8秒）</li>
+          <li>呼吸感微动（3-6秒）</li>
+          <li>纯静止（2-4秒）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="prompt-block"><span class="label">【镜头运镜标注示例】</span>
+
+镜头 01 | 蜀道难 · 第一句
+<span class="label">镜头类型：</span>  <span class="value">超远景</span>
+<span class="label">运镜方式：</span>  <span class="value">无人机垂直上升，从山谷仰拍到云海之上</span>
+<span class="label">运动速度：</span>  <span class="value">极慢，匀速</span>
+<span class="label">镜头时长：</span>  <span class="value">10 秒</span>
+<span class="label">视频关键词：</span><span class="value">slow aerial ascent, rising through clouds, epic vertical movement</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 8 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l8">
+    <div class="level-header">
+      <div class="level-badge">八级<br>规范</div>
+      <h2 class="level-title">图片提示词统一结构</h2>
+    </div>
+    <p class="level-desc">每一句诗不要自由发挥。全部按照固定的十二段结构输出提示词，确保每一段都能被图片模型稳定解读。</p>
+
+    <div class="prompt-block"><span class="label">【标准提示词结构 · 完整模板】</span>
+
+<span class="label">【镜头编号】</span>      <span class="value">Shot_01</span>
+<span class="label">【对应诗句】</span>      <span class="value">噫吁嚱，危乎高哉！</span>
+<span class="label">【人物调用】</span>      <span class="value">李白-TD-001（青色广袖道袍，白玉发簪，英俊侠气）</span>
+<span class="label">【环境调用】</span>      <span class="value">蜀道-ENV-001（青灰山峰，栈道，云海，古松）</span>
+<span class="label">【时间】</span>          <span class="value">黄昏</span>
+<span class="label">【天气】</span>          <span class="value">浓雾 · 云海翻涌</span>
+<span class="label">【镜头类型】</span>      <span class="value">超远景</span>
+<span class="label">【运镜】</span>          <span class="value">无人机缓慢推进，极慢，10秒</span>
+<span class="label">【情绪基调】</span>      <span class="value">震撼 · 天地苍茫</span>
+
+<span class="label">【主体画面描述】</span>
+<span class="value">A lone Tang dynasty scholar in azure robes stands at the edge of a
+towering cliff on the ancient Shu Road, dwarfed by endless jagged peaks
+piercing through rolling clouds, ancient plank walkways clinging to sheer
+rock faces below, a vast ocean of clouds swallowing the valleys.</span>
+
+<span class="label">【统一风格词】</span>
+<span class="style-tag">Chinese ink wash animation film, Song dynasty landscape aesthetics,
+rice paper texture, dynamic ink diffusion effect, cinematic lighting,
+epic composition, 8K resolution, masterpiece quality,
+traditional Chinese animation school style,
+highly detailed brushwork, consistent character design 李白-TD-001,
+consistent environment design 蜀道-ENV-001,
+Dunhuang color palette, Yuan dynasty ink wash mood</span>
+
+<span class="label">【负面词】</span>
+<span class="neg">modern architecture, modern clothing, western fantasy elements,
+anime style, Japanese animation, game UI overlay, text, logo,
+watermark, blurry, low quality, photorealistic, 3D render,
+inconsistent style, bright blue sky, sunlight</span></div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 9 ═══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l9">
+    <div class="level-header">
+      <div class="level-badge">九级<br>规范</div>
+      <h2 class="level-title">场景连续性规则</h2>
+    </div>
+    <p class="level-desc">每个镜头结束时必须记录五个状态，下一镜头自动继承，禁止刷新世界。</p>
+
+    <table class="continuity-table">
+      <thead>
+        <tr>
+          <th>状态维度</th>
+          <th>镜头 07 结束状态</th>
+          <th>镜头 08 继承状态</th>
+          <th>变化方向</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>人物状态</td>
+          <td>李白-TD-001 站立，右手指山</td>
+          <td>继承：李白-TD-001，站立</td>
+          <td>动作变为缓步前行</td>
+        </tr>
+        <tr>
+          <td>位置状态</td>
+          <td>青泥岭半山腰，南侧栈道</td>
+          <td>继承：青泥岭半山腰，南侧栈道</td>
+          <td>方向略向北移</td>
+        </tr>
+        <tr>
+          <td>天气状态</td>
+          <td>大雾，云海翻涌</td>
+          <td>继承：大雾，云海翻涌</td>
+          <td>雾气更浓</td>
+        </tr>
+        <tr>
+          <td>时间状态</td>
+          <td>黄昏，金色余晖</td>
+          <td>继承：黄昏</td>
+          <td>光线更暗，接近日落</td>
+        </tr>
+        <tr>
+          <td>情绪状态</td>
+          <td>震惊，仰望</td>
+          <td>继承：震惊→渐入压抑</td>
+          <td>由外观转向内心</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:16px;">
+      <div class="prompt-block"><span class="label">【连续性状态记录格式】</span>
+
+<span class="comment">——— Shot_07 结束状态记录 ———</span>
+<span class="label">人物：</span>    <span class="value">李白-TD-001 | 站立 | 右手抬起指向远山 | 神情震惊</span>
+<span class="label">位置：</span>    <span class="value">蜀道-ENV-001 | 青泥岭 | 半山腰南侧栈道 | 面朝北</span>
+<span class="label">天气：</span>    <span class="value">大雾 | 云海翻涌 | 能见度约 50 米</span>
+<span class="label">时间：</span>    <span class="value">黄昏 | 日落前约 30 分钟 | 光线暗金色</span>
+<span class="label">情绪：</span>    <span class="value">震惊 · 敬畏</span>
+
+<span class="comment">——— Shot_08 继承设定 ———</span>
+<span class="label">继承：</span>    <span class="value">以上所有状态</span>
+<span class="label">变化：</span>    <span class="value">李白缓步前行 | 情绪由震惊→压抑 | 光线更暗</span>
+<span class="keyword">禁止：</span>    <span class="neg">重新生成人物 | 改变天气 | 切换位置 | 改变时间段</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ LEVEL 10 ══ -->
+  <div class="divider"></div>
+  <section class="level-section" id="l10">
+    <div class="level-header">
+      <div class="level-badge">十级<br>规范</div>
+      <h2 class="level-title">终极继承规则</h2>
+    </div>
+    <p class="level-desc">每一张图生成时自动附加以下六条继承声明。此规则解决 90% 的 AI 视频跳镜、跳风格、人物变脸问题。</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>01 人物继承</h4>
+        <p>继承前镜头人物外形设计（角色 ID），包含脸型、体型、发型、胡须、表情特征，禁止重新生成新人物。</p>
+      </div>
+      <div class="spec-card">
+        <h4>02 服饰继承</h4>
+        <p>继承前镜头服饰设计，包含颜色、材质、配饰细节，除非诗意明确要求换装，否则全程一套服饰。</p>
+      </div>
+      <div class="spec-card">
+        <h4>03 环境继承</h4>
+        <p>继承前镜头环境 ID 及所有地貌细节，山脉走向、植被种类、地标位置不得在镜头间随机变化。</p>
+      </div>
+      <div class="spec-card">
+        <h4>04 天气继承</h4>
+        <p>继承前镜头天气设定，云量、雾浓、降水状态全部继承。若需转变则必须在提示词中明确声明"渐变"。</p>
+      </div>
+      <div class="spec-card">
+        <h4>05 色彩继承</h4>
+        <p>继承全片色板设定（六级规范），每个镜头的色彩占比不得偏离超过 15%，禁止突然高饱和或高亮度。</p>
+      </div>
+      <div class="spec-card">
+        <h4>06 镜头语言继承</h4>
+        <p>继承整体镜头语言风格（水墨动画电影），不因单句诗的意象变化而切换为写实摄影或动漫风格。</p>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="prompt-block"><span class="label">【终极继承声明 · 每个提示词末尾必须附加】</span>
+
+<span class="keyword">CONTINUITY DIRECTIVE:</span>
+<span class="value">Maintain absolute visual consistency with previous shots.
+Same character design as 李白-TD-001 (face, body, hair, costume, accessories).
+Same environment design as 蜀道-ENV-001 (terrain, vegetation, atmosphere).
+Same weather condition (heavy fog, churning sea of clouds).
+Same color palette (70% ink black, 20% cool grey, 5% vermillion, 5% pale gold).
+Same artistic style (Chinese ink wash animation film, rice paper texture).
+Do NOT introduce any new visual elements not established in previous shots.
+This is shot N of a continuous cinematic sequence.</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ GENERATOR ══ -->
+  <div class="divider"></div>
+  <section id="generator">
+    <h2>提示词生成器</h2>
+    <p class="gen-desc">输入诗词基本信息，自动生成世界观设定、作者角色卡和标准提示词框架。</p>
+
+    <div class="gen-row">
+      <div class="gen-group">
+        <label>诗词名称</label>
+        <input type="text" id="g-poem" placeholder="例：蜀道难" value="蜀道难">
+      </div>
+      <div class="gen-group">
+        <label>作者姓名</label>
+        <input type="text" id="g-author" placeholder="例：李白" value="李白">
+      </div>
+      <div class="gen-group">
+        <label>朝代</label>
+        <select id="g-dynasty">
+          <option value="唐代">唐代</option>
+          <option value="宋代">宋代</option>
+          <option value="元代">元代</option>
+          <option value="明代">明代</option>
+          <option value="清代">清代</option>
+          <option value="魏晋">魏晋</option>
+          <option value="汉代">汉代</option>
+        </select>
+      </div>
+      <div class="gen-group">
+        <label>作者身份</label>
+        <input type="text" id="g-role" placeholder="例：游历诗人" value="游历诗人">
+      </div>
+    </div>
+
+    <div class="gen-row">
+      <div class="gen-group">
+        <label>环境类型</label>
+        <select id="g-env">
+          <option value="蜀道-ENV-001">蜀道环境库</option>
+          <option value="山岳-ENV-002">山岳环境库</option>
+          <option value="江河-ENV-003">江河环境库</option>
+          <option value="边塞-ENV-004">边塞环境库</option>
+          <option value="宫廷-ENV-005">宫廷环境库</option>
+          <option value="长安-ENV-006">长安环境库</option>
+        </select>
+      </div>
+      <div class="gen-group">
+        <label>全片光影基调</label>
+        <select id="g-light">
+          <option value="阴天 · 云海 · 高反差 · 低饱和">阴天云海（蜀道/山岳）</option>
+          <option value="晨雾 · 冷青色 · 薄光">晨景（冷青）</option>
+          <option value="黄昏 · 金色墨染 · 长影">黄昏（金色）</option>
+          <option value="深夜 · 深蓝墨色 · 星光">夜景（深蓝）</option>
+          <option value="月夜 · 银灰水墨 · 月光漫射">月夜（银灰）</option>
+          <option value="晴日 · 高亮 · 暖黄 · 强对比">午景（暖黄）</option>
+        </select>
+      </div>
+      <div class="gen-group">
+        <label>色彩方案</label>
+        <select id="g-color">
+          <option value="墨黑70%·青灰20%·朱砂5%·淡金5%">蜀道/山岳（墨黑+青灰）</option>
+          <option value="沙黄50%·褐赤30%·天蓝10%·血橙10%">边塞（沙黄+褐赤）</option>
+          <option value="烟白40%·碧绿35%·桃粉15%·淡黄10%">江南（烟白+碧绿）</option>
+          <option value="朱红40%·赭金35%·碧玉15%·冷白10%">宫廷（朱红+赭金）</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="gen-row">
+      <div class="gen-group" style="grid-column:1/-1;">
+        <label>诗句（每行一句，用于生成逐句镜头提示词框架）</label>
+        <textarea id="g-lines" rows="4" placeholder="噫吁嚱，危乎高哉！
+蜀道之难，难于上青天！
+蚕丛及鱼凫，开国何茫然！">噫吁嚱，危乎高哉！
+蜀道之难，难于上青天！
+蚕丛及鱼凫，开国何茫然！</textarea>
+      </div>
+    </div>
+
+    <div class="gen-actions">
+      <button class="gen-btn primary" onclick="generateAll()">生成完整规范包</button>
+      <button class="gen-btn secondary" onclick="clearOutput()">清空</button>
+    </div>
+
+    <div class="gen-output" id="gen-output">
+
+      <div class="output-section">
+        <h4>世界观设定 <button class="copy-btn" onclick="copyBlock('out-worldview')">复制</button></h4>
+        <div class="prompt-block" id="out-worldview"></div>
+      </div>
+
+      <div class="output-section">
+        <h4>作者角色卡 <button class="copy-btn" onclick="copyBlock('out-char')">复制</button></h4>
+        <div class="prompt-block" id="out-char"></div>
+      </div>
+
+      <div class="output-section">
+        <h4>逐句镜头提示词框架 <button class="copy-btn" onclick="copyBlock('out-shots')">复制</button></h4>
+        <div class="prompt-block" id="out-shots"></div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  古典诗词影视宇宙统一规范 V2.0 · 十级规范体系 · 解决 AI 视频跳镜、跳风格、人物变脸三大核心问题
+</footer>
+
+<script>
+  // ── Environment tab switcher ──
+  function switchEnv(id) {
+    document.querySelectorAll('.env-tab').forEach((t,i) => {
+      const ids = ['shu','shan','jiang','bianSai','gongting','changan'];
+      t.classList.toggle('active', ids[i] === id);
+    });
+    document.querySelectorAll('.env-panel').forEach(p => {
+      p.classList.remove('active');
+    });
+    document.getElementById('env-' + id).classList.add('active');
+  }
+
+  // ── Dynasty abbreviation map ──
+  const dynastyMap = {
+    '唐代': 'TD', '宋代': 'SD', '元代': 'YD',
+    '明代': 'MD', '清代': 'QD', '魏晋': 'WJ', '汉代': 'HD'
+  };
+
+  // ── Shot type selector based on line content ──
+  function pickShot(line, index) {
+    const starters = ['噫', '嗟', '君', '呜'];
+    const emotions = ['情', '泪', '愁', '思', '怀', '苦'];
+    const landscapes = ['山', '峰', '岭', '川', '河', '江', '海', '天'];
+    const details = ['花', '叶', '鸟', '虫', '雨', '雪', '星', '月'];
+
+    if (index === 0) return '超远景';
+    if (starters.some(c => line.includes(c))) return '近景';
+    if (emotions.some(c => line.includes(c))) return '近景';
+    if (details.some(c => line.includes(c))) return '特写';
+    if (landscapes.some(c => line.includes(c))) return index % 2 === 0 ? '超远景' : '远景';
+    return index % 3 === 0 ? '中景' : '远景';
+  }
+
+  const shotMovements = {
+    '超远景': '无人机缓慢推进，极慢，10秒 | slow aerial push, 10s',
+    '远景':   '地面跟随推进，慢速，6秒 | slow tracking shot, 6s',
+    '中景':   '侧向横移，中速，5秒 | lateral dolly, 5s',
+    '近景':   '固定微动景深，慢，5秒 | static with breathing movement, 5s',
+    '特写':   '固定极近，4秒 | static macro, 4s'
+  };
+
+  // ── Main generator ──
+  function generateAll() {
+    const poem    = document.getElementById('g-poem').value.trim() || '（未命名）';
+    const author  = document.getElementById('g-author').value.trim() || '（作者）';
+    const dynasty = document.getElementById('g-dynasty').value;
+    const role    = document.getElementById('g-role').value.trim() || '诗人';
+    const envId   = document.getElementById('g-env').value;
+    const light   = document.getElementById('g-light').value;
+    const color   = document.getElementById('g-color').value;
+    const rawLines = document.getElementById('g-lines').value.trim();
+    const lines   = rawLines ? rawLines.split('\n').filter(l => l.trim()) : [];
+
+    const abbr    = dynastyMap[dynasty] || 'XX';
+    const charId  = `${author}-${abbr}-001`;
+    const envName = envId.split('-')[0];
+
+    // World-view block
+    const wv = `【世界观设定】  《${poem}》 · ${author}
+
+艺术风格：  中国传统水墨动画电影
+参考体系：  敦煌壁画色彩 / 宋代山水构图 / 元代水墨意境 / 中国动画学派
+画面比例：  16:9    分辨率：8K    帧率：24fps
+质感：      宣纸纹理    渲染：动态水墨扩散    镜头语言：电影级
+环境锚定：  ${envId}（${envName}系列地貌，全片保持一致）
+光影基调：  ${light}
+色彩方案：  ${color}
+
+禁止元素：  modern architecture, modern clothes, western fantasy,
+            anime style, game UI, text, logo, watermark`;
+
+    // Character card block
+    const ch = `【作者角色卡】  ${charId}
+
+角色ID：    ${charId}
+姓名：      ${author}
+朝代：      ${dynasty}
+身份：      ${role}
+体型：      （请根据历史资料填写）
+脸型：      （请根据历史资料填写）
+发型：      （请根据历史资料填写）
+胡须：      （请根据历史资料填写）
+服饰：      （请根据历史资料填写具体颜色·材质·配饰）
+气质：      （请填写：飘逸/沉稳/豪迈/婉约等）
+表情特征：  （请填写）
+动作特征：  （请填写惯用手势·姿态）
+
+# 此 ID 在本片所有镜头中保持一致，禁止重新生成人物外形`;
+
+    // Shot blocks
+    let shots = '';
+    if (lines.length === 0) {
+      shots = '（请在上方输入诗句后重新生成）';
+    } else {
+      lines.forEach((line, i) => {
+        const num    = String(i + 1).padStart(2, '0');
+        const shot   = pickShot(line, i);
+        const move   = shotMovements[shot];
+        shots += `${'─'.repeat(56)}
+【Shot_${num}】  ${line}
+
+人物调用：  ${charId}
+环境调用：  ${envId}
+时间：      （继承全片光影：${light.split('·')[0].trim()}）
+天气：      （继承上一镜头天气，如有变化请在此说明）
+镜头类型：  ${shot}
+运镜：      ${move}
+情绪：      （根据本句诗意填写）
+
+主体画面描述：
+${line}——（请在此处用英文描述本句的具体画面意象）
+
+统一风格词：
+Chinese ink wash animation film, Song dynasty landscape aesthetics,
+rice paper texture, dynamic ink diffusion effect, cinematic lighting,
+epic composition, 8K masterpiece, traditional Chinese animation school,
+consistent character ${charId}, consistent environment ${envId},
+${color.replace(/·/g,',').replace(/%/g,'percent')}
+
+负面词：
+modern architecture, modern clothing, western fantasy, anime style,
+game UI, text, watermark, blurry, low quality, ${light.includes('阴') ? 'bright sunlight, clear blue sky,' : ''} photorealistic
+
+CONTINUITY: Maintain all character/environment/weather/color from previous shot.
+
+`;
+      });
+    }
+
+    document.getElementById('out-worldview').textContent = wv;
+    document.getElementById('out-char').textContent = ch;
+    document.getElementById('out-shots').textContent = shots;
+    const out = document.getElementById('gen-output');
+    out.classList.add('visible');
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function clearOutput() {
+    document.getElementById('gen-output').classList.remove('visible');
+  }
+
+  function copyBlock(id) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector(`[onclick="copyBlock('${id}')"]`);
+      const orig = btn.textContent;
+      btn.textContent = '已复制';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  }
+</script>
+</body>
+</html>
